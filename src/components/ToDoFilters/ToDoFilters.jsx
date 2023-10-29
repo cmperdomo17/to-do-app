@@ -1,19 +1,28 @@
-import { FilterButton, FilterButtonContainter, FiltersCointainer, ItemsLeft } from "./ToDoFilters.components"
+import { FilterButton, FilterButtonContainer, FiltersContainer, ItemsLeft } from "./ToDoFilters.components"
 
-const ToDoFilters = () => {
+const ToDoFilters = ({
+    total,
+    activeFilter,
+    showAllToDos, 
+    showActiveToDos, 
+    showCompletedToDos, 
+    handleClearComplete
+
+}) => {
+        
     return (
-        <FiltersCointainer>
-            <ItemsLeft/>
-            <FilterButtonContainter>
-                <FilterButton action = {() => {}} active = 'all' filter = 'All' />
-                <FilterButton action = {() => {}} active = 'all' filter = 'Active' />
-                <FilterButton action = {() => {}} active = 'all' filter = 'Completed' />
-            </FilterButtonContainter>
+        <FiltersContainer>
+            <ItemsLeft total={total} />
+            <FilterButtonContainer>
+                <FilterButton action={() => showAllToDos()} active={activeFilter} filter='All' />
+                <FilterButton action={() => showActiveToDos()} active={activeFilter} filter='Active' />
+                <FilterButton action={() => showCompletedToDos()} active={activeFilter} filter='Completed' />
+            </FilterButtonContainer>
 
-            <button className = "text-gray-400 hover:text-white cursor-pointer transition-all duration-500 ease-in">
+            <button onClick={() => handleClearComplete()} className="text-gray-400 hover:text-white cursor-pointer transition-all duration-300 ease-in-out">
                 Clear Completed
             </button>
-        </FiltersCointainer>
+        </FiltersContainer>
     )
 }
 

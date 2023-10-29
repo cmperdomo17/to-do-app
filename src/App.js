@@ -2,7 +2,7 @@ import { ToDoInput } from './components/ToDoInput';
 import { ToDo } from './components/ToDo';
 import { Title } from './components/Title/index';
 import { ToDoList } from './components/ToDoList';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
 
@@ -39,6 +39,10 @@ function App() {
 
   ])
 
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  const [FilteredToDos, setFilteredToDos] = useState(toDos);
+
   const addToDo = (title) => {
     const lastId = toDos.length > 0 ? toDos[toDos.length - 1].id : 1;
 
@@ -70,15 +74,49 @@ function App() {
     setToDos(updateList);
   }
 
+  const handleClearComplete = () => {
+    const updateList = toDos.filter(toDo => !toDo.completed);
+    setToDos(updateList);
+  }
+  const showAllToDos = () => {
+    setActiveFilter('all');
+  }
+
+  const showActiveToDos = () => {
+    setActiveFilter('active');
+  }
+
+  const showCompletedToDos = () => {
+    setActiveFilter('completed');
+  }
+
+  useEffect(() => {
+    if (activeFilter === 'all') {
+      setFilteredToDos(toDos);
+    } else if (activeFilter === 'active') {
+        const activeToDos = toDos.filter(toDo => toDo.completed === false);
+        setFilteredToDos(activeToDos);
+    } else if (activeFilter === 'completed') {
+        const completedToDos = toDos.filter(toDo => toDo.completed === true);
+        setFilteredToDos(completedToDos);
+    }
+    
+  },[activeFilter, toDos]);
+
   return (
     <div className="bg-gray-900 min-h-screen h-full text-gray-100 flex items-center justify-center py-15 px-5">
       <div className="container flex flex-col max-w-xl"> 
         <Title />
         <ToDoInput addToDo = {addToDo} />
         <ToDoList 
-          toDos={toDos} 
+          toDos={FilteredToDos} 
+          activeFilter = {activeFilter}
           handleSetComplete = {handleSetComplete}
           handleDelete = {handleDelete}
+          showActiveToDos = {showActiveToDos}
+          showAllToDos = {showAllToDos}
+          showCompletedToDos = {showCompletedToDos}
+          handleClearComplete = {handleClearComplete}
         />
       </div>
     </div>
