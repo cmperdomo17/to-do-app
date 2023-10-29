@@ -14,7 +14,7 @@ function App() {
 
     {
       id: 2,
-      title: 'Takee a Bath',
+      title: 'Take a Bath',
       completed: false
     },
 
