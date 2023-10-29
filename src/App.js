@@ -1,5 +1,4 @@
 import { ToDoInput } from './components/ToDoInput';
-import { ToDo } from './components/ToDo';
 import { Title } from './components/Title/index';
 import { ToDoList } from './components/ToDoList';
 import React, { useEffect, useState } from 'react';
@@ -60,7 +59,7 @@ function App() {
   const handleSetComplete = (id) => {
     const updateList = toDos.map(toDo => {
       if (toDo.id === id) {
-        return {... toDo, completed: !toDo.completed}
+        return {...toDo, completed: !toDo.completed}
       }
       return toDo;
     })
